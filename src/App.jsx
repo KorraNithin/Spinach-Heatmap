@@ -1,5 +1,4 @@
 
-
 import { useEffect, useRef, useState } from "react";
 import Map from "ol/Map";
 import View from "ol/View";
@@ -27,29 +26,27 @@ const App = () => {
   const [selectedBaseMap, setSelectedBaseMap] = useState("Google Satellite");
   const [selectedStressMap, setSelectedStressMap] = useState("Stress Map 1");
 
-  // Define EPSG:4326 projection
-  const projection4326 = getProjection("EPSG:4326");
+ // Define EPSG:4326 projection
+ const projection4326 = getProjection("EPSG:4326");
 
-  // Define base maps
-  const baseMaps = {
-    "Google Satellite": new TileLayer({
-      source: new XYZ({
-        url: "http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}",
-        maxZoom: 23,
-        preload: 1,
-      }),
-      visible: true,
+ const baseMaps = {
+  "Google Satellite": new TileLayer({
+    source: new XYZ({
+      url: "http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}",
+      maxZoom: 23,
+      preload: 1,
     }),
-    None: null,
-  };
+    visible: true,
+  }),
+  None: null,
+};
 
-  // Define stress maps
+   // Define stress maps
   const stressMaps = {
     "Stress Map 1": "/assets/stress_sample.json",
     "Stress Map 2": "/assets/stress_sample_2.json",
   };
 
-  // Function to create GeoTIFF layer
   const createTifLayer = (url) => {
     const source = new GeoTIFF({
       sources: [{ url }],
@@ -101,9 +98,9 @@ const App = () => {
 
     return stressLayer;
   };
-  
-  // Function to create heatmap layer
-  const createHeatmapLayer = (geojsonData) => {
+
+   // Function to create heatmap layer
+   const createHeatmapLayer = (geojsonData) => {
     try {
       const vectorSource = new VectorSource({
         features: new GeoJSON().readFeatures(geojsonData, {
@@ -235,7 +232,7 @@ const App = () => {
     });
 
     // Load GeoTIFF
-    const currentTifUrl = "https://drive.google.com/file/d/1YU5ZkrgSE0bt8ijiWxgxYjrmXMjn1wPM/view?usp=sharing";
+    const currentTifUrl = "./assets/sample.tif";
     if (map && currentTifUrl) {
       const newTifLayer = createTifLayer(currentTifUrl);
       map.addLayer(newTifLayer);
